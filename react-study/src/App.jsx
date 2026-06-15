@@ -6,6 +6,7 @@ import './App.css'
 import Basic01 from './components/basic01'
 import State01 from './components/State01'
 import Export01 from './components/Export01'
+import Props02 from './components/Props02'
 
 import Quiz01 from './quiz/quiz01/quiz01'
 import State02 from './components/State02'
@@ -27,8 +28,9 @@ function App() {
     //<State02/>
     
     //<State03/>
-    <Props01/>
-   )
+    //<Props01/>
+    <Props02/>
+    )
 }
 
-export default App
+export default App ;

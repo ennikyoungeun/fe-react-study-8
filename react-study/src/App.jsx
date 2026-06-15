@@ -16,6 +16,7 @@ import Quiz02 from './quiz/quiz02/Quiz02'
 import Quiz03 from './quiz/quiz03/Quiz03'
 import NewsBlog from './newsblog/Newsblog'
 import NewsBlog01 from './newsblog/NewsBlog01'
+import NewsBlog02 from './newsblog/NewsBlog02'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -38,7 +39,8 @@ function App() {
     //<Quiz03/>
     //<NewsBlog />
 
-    <NewsBlog01/>
+    <NewsBlog02/>
+    // <NewsBlog01/>
   )
 }
 

@@ -14,6 +14,7 @@ import State03 from './components/State03'
 import Props01 from './components/Props01'
 import Quiz02 from './quiz/quiz02/Quiz02'
 import Quiz03 from './quiz/quiz03/Quiz03'
+import NewsBlog from './newsblog/Newsblog'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -28,14 +29,14 @@ function App() {
     //<Quiz01/>
 
     //<State02/>
-    
+
     //<State03/>
     //<Props01/>
     //<Props02/>
-    <Quiz02/>
+    //<Quiz02/>
     //<Quiz03/>
-
-    )
+    <NewsBlog />
+  )
 }
 
-export default App ;
+export default App;

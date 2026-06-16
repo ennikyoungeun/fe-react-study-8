@@ -41,8 +41,8 @@ function App() {
     //<Quiz03/>
     //<NewsBlog />
       // <Quiz04/>
-      <Quiz05/>
-    // <NewsBlog02/>
+      //<Quiz05/>
+     <NewsBlog02/>
     // <NewsBlog01/>
   )
 }

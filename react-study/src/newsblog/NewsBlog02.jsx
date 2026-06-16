@@ -64,6 +64,33 @@ function NewsBlog02() {
 
                                 }}>❤</span> {likeCountArr[index]} </h4>
                             <p>내용자리</p>
+
+                            <button onClick={()=>{
+                                //누른 대상을 삭제
+                                //배열 안에 누른대상의 index위치에 있는 값 제거
+
+                                // index 
+                                
+                                //arr.splice(index,몇개지울, 추가할 값)
+                                
+                                // //뉴스제목
+                                // let temp= [...news];
+                                // temp.splice(index,1); //삭제를 누른 index위치에 값 1개 삭제
+                                // setNews(temp);
+
+                                // //좋아요 갯수 같이 삭제
+                                // likeCountArr.splice(index,1);
+
+                                let temp =[...news];
+                                temp=temp.filter((value, index)=>{
+                                    return idx != index;
+                                })
+                                console.log(temp);
+                                setNews(temp);
+
+                                setLikeCountArr( likeCountArr.filter(( _ , idx) => idx != index ))
+                
+                            }}  >삭제</button>
                         </div>
                     )
                 })

@@ -29,7 +29,7 @@ function NewsBlog02() {
     let [selectedLikeCount, setSelectedLikeCount] = useState(0);
 
     //input 요소에서 입력된 값을 저장하는 용도
-    let [inputText, setInputText] =useState('');
+    let [inputText, setInputText] = useState('');
 
 
     return (
@@ -53,15 +53,16 @@ function NewsBlog02() {
                                 setSelectedTitle(item);
                                 setSelectedLikeCount(likeCountArr[index]);
 
-                            }}>{news[index]} <span onClick={(event) => {
-                                event.stopPropagation(); //이벤트 발생을 추가로 전파(전달)하는 것을 stop!
+                            }}>
+                                {news[index]} <span onClick={(event) => {
+                                    event.stopPropagation(); //이벤트 발생을 추가로 전파(전달)하는 것을 stop!
 
-                                //배열에 존재하는 값 변경 -> 재렌더링
-                                let temp = [...likeCountArr];
-                                temp[index] += 1;
-                                setLikeCountArr(temp);
+                                    //배열에 존재하는 값 변경 -> 재렌더링
+                                    let temp = [...likeCountArr];
+                                    temp[index] += 1;
+                                    setLikeCountArr(temp);
 
-                            }}>❤</span> {likeCountArr[index]} </h4>
+                                }}>❤</span> {likeCountArr[index]} </h4>
                             <p>내용자리</p>
                         </div>
                     )
@@ -76,7 +77,7 @@ function NewsBlog02() {
             }}>긴급제목변경</button>
 
             <div>
-                <input type='text' id="input_news_title" value={inputText} onChange={(event)=>{
+                <input type='text' id="input_news_title" value={inputText} onChange={(event) => {
 
                     //input 창에서 입력이발생-> onChange변경된 함수 ->value값 ->state변수에 저장
 
@@ -91,15 +92,25 @@ function NewsBlog02() {
                     배열...push(title);
                     input_title.value='';
                     */
-                }}/>
-                <button onClick={()=>{
+                }} />
+                <button onClick={() => {
                     //발행 버튼 클릭 -> input 입력한 값 state변수에 저장된 값 -> 배열에 등록/추가 처리
 
-                    let temp =[...news];
-                    temp.push(inputText);
-                    setNews(temp);
+                    //1.입력 된 값 없이 발행되는 것 막기
 
-                    setInputText(''); //입력된값 제거처리
+                    inputText = inputText.trim();//앞뒤 공백제거 
+                    
+                    if (inputText == '') {
+                        alert('입력된 값이 없습니다.');
+                        setInputText('');  //입력칸 초기화
+                    } else {
+                        let temp = [...news];
+                        temp.push(inputText);
+                        setNews(temp);
+                        setLikeCountArr([...likeCountArr, 0]);
+                    }
+
+                    setInputText('');
 
                 }}>발행</button>
             </div>

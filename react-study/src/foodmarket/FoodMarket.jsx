@@ -18,13 +18,14 @@ import { useState } from 'react';
 import FoodCard from './components/FoodCard';
 import Home from './pages/Home';
 import CustomerService from './pages/CustomerServics';
+import Detail from './pages/Detail';
 
 function FoodMarket() {
 
     let [foods, setFoods] = useState(foodsData);
 //기본경로 이동
 //<a href="주소"> 새로운 주소로 이동(새로 고침)
-//
+// location.href ='주소'
 
     //react-router
     //link to =주소
@@ -51,11 +52,12 @@ function FoodMarket() {
             </Navbar>
 
             <Routes>
-                <Route path='/'element={<Home foods={foods}/>}/>
-                <Route path='/help'element={<CustomerService/>}/>
-                <Route path='/detail'element={<div><h1>datail page</h1></div>}/>
-                <Route path='/info'element={<div><h1>info page</h1></div>}/>
-                <Route path='/*'element={<div><h1>잘못된 접근입니다.</h1></div>}/>
+                <Route path="/"element={<Home foods={foods}/>}/>
+                <Route path="/help"element={<CustomerService/>}/>
+                <Route path="/detail/:id" element={<Detail foods={foods}/>}/>
+                <Route path="/detail" element={<div><h1>detail page</h1></div>} />
+                <Route path="/info" element={<div><h1>info page</h1></div>}/>
+                <Route path="/*" element={<div><h1>잘못된 접근입니다.</h1></div>}/>
             </Routes>
             
             

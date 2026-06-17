@@ -44,9 +44,9 @@ function App() {
     //<NewsBlog />
       // <Quiz04/>
       //<Quiz05/>
-      <Quiz06/>
+      //<Quiz06/>
      //<NewsBlog02/>
-     //<FoodMarket/>
+     <FoodMarket/>
     // <NewsBlog01/>
   )
 }

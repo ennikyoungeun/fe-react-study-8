@@ -9,8 +9,14 @@ import banner_bg from './img/banner_bg.jpg';
 import food1 from './img/food1.jpg';
 import food2 from './img/food2.jpg';
 import food3 from './img/food3.jpg';
+//화면에 보여주는 푸드정보 기준 data import
+import foodsData from './data/FoodsData';
+import { useState } from 'react';
+import FoodCard from './components/FoodCard';
 
 function FoodMarket() {
+
+    let [foods, setFoods] = useState(foodsData);
 
     return (
         <div>
@@ -28,12 +34,32 @@ function FoodMarket() {
             {/* 
             이미지사용
 
+            1.css 에서 사용
+                이미지 경로 (상대경로 ./img/...)
+
+            2.js(jsx)
+            
             상대경로연결 사용 XXX
             <img src="../../image/menu.png"/> XXX
 
             react 컴포넌트 에서 이미지사용시, import ->사용
             <img src="http://..외부 url"/>
-            <img src ={ import한 이미지}
+            <img src ={ import한 이미지}/>
+
+            3.public 폴더에 이미지를 미리 저장해놓고 사용
+            현재 실행중인 서버가 public 경로를 통해 image 에 접근할수 있는 서버역할
+            이미지 외부에 url에 접근해서 사용하듯이. 사용
+
+            <img src={'http://localhost:5173/images/food1.jpg'} />
+            <img src ={'/images/food1.jpg} />
+
+            cra : <img src ={ process.evn.PUBLIC_URL+'/images/food1.jpg} />
+                            package.json
+                            "homepage":"detailServicePath" 상세경로 설정
+
+            vite :<img src ={ import.meta.env.BASE_URL +'/images/food1.jpg} />
+                            vite.config. js
+                            base: "/detailServicePath/"상세경로 설정
             */}
 
             {/* <img src={banner_bg}/> */}
@@ -45,56 +71,68 @@ function FoodMarket() {
              */}
             <Container>
                 <Row>
+                    {
+                        foods.map((food, index)=>{
+                            return(
+                            <Col md={4} sm={2}>
+                                {/* <FoodCard id={food.id} titel={food.title} . . ./> */}
+                                <FoodCard food={food} foods={foods} index={index}/>
+                            </Col>
+                            )
+                        })
+                    }
+                </Row>
+            </Container>
+
+                {/* <Container>
+                <Row>
                     <Col md={4} sm={2}>
                         <Card style={{ width: '18rem' }}>
                             <Card.Img variant="top" src={food1} />
                             <Card.Body>
-                                <Card.Title>카드 타이틀</Card.Title>
-                                <Card.Text>
-                                    내부 내용쓰는곳. p태그 인식
-                                </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Card.Title>{foods[0].title}</Card.Title>
+                                <Card.Text>{foods[0].content}</Card.Text>
+                                <Card.Text>{foods[0].price}</Card.Text>
+                                <Button variant="primary">상세보기</Button>
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col md={4} sm={2}><Card style={{ width: '18rem' }}>
+                    <Col md={4} sm={2}>
+                    <Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={food2} />
                         <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
+                                <Card.Title>{foods[1].title}</Card.Title>
+                                <Card.Text>{foods[1].content}</Card.Text>
+                                <Card.Text>{foods[1].price}</Card.Text>
+                                <Button variant="primary">상세보기</Button>
+                            </Card.Body>
+                        
                     </Card>
                     </Col>
                     <Col md={4} sm={2}><Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={food3} />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
+                            <Card.Body>
+                                <Card.Title>{foods[2].title}</Card.Title>
+                                <Card.Text>{foods[2].content}</Card.Text>
+                                <Card.Text>{foods[2].price}</Card.Text>
+                                <Button variant="primary">상세보기</Button>
+                            </Card.Body>
                     </Card>
                     </Col>
 
                 </Row>
-            </Container>
+            </Container> */}
 
 
 
 
 
-            {/* <Spinner animation="border" role="status">
+                {/* <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
             </Spinner>
 
             <Button variant="success">Success</Button> */}
-            {/* <Button variant="primary">Primary</Button>
+                {/* <Button variant="primary">Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="success">Success</Button>
             <Button variant="warning">Warning</Button>

@@ -11,136 +11,54 @@ import food2 from './img/food2.jpg';
 import food3 from './img/food3.jpg';
 //화면에 보여주는 푸드정보 기준 data import
 import foodsData from './data/FoodsData';
+
+import { Routes,Route, Link, useNavigate } from 'react-router';
+
 import { useState } from 'react';
 import FoodCard from './components/FoodCard';
+import Home from './pages/Home';
+import CustomerService from './pages/CustomerServics';
 
 function FoodMarket() {
 
     let [foods, setFoods] = useState(foodsData);
+//기본경로 이동
+//<a href="주소"> 새로운 주소로 이동(새로 고침)
+//
+
+    //react-router
+    //link to =주소
+    //navigate=(주소)
+
+    let navigate = useNavigate();
 
     return (
         <div>
             <Navbar bg="light" data-bs-theme="light">
                 <Container>
-                    <Navbar.Brand href="#home">FoodMarket</Navbar.Brand>
+                    <Navbar.Brand onClick={()=>{navigate("/")}}>FoodMarket</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
+                        <Nav.Link href="#home"><Link to="/">Home</Link></Nav.Link>
+                        <Nav.Link onClick={()=>{ navigate("/detail")}}>FoodDetail</Nav.Link>
+                        <Nav.Link onClick={()=>{ navigate("/info")}}>Info</Nav.Link>
+                        <Nav.Link onClick={()=>{ navigate("/help")}}>고객센터</Nav.Link>
+                        {/* 
+                        <Nav.Link href="#features"><Link to="/detail">FoodDetail</Link></Nav.Link>
+                        <Nav.Link href="/ifo">Info</Nav.Link>
+                        <Nav.Link href="/help">고객센터</Nav.Link> */}
                     </Nav>
                 </Container>
             </Navbar>
 
-            {/* 
-            이미지사용
-
-            1.css 에서 사용
-                이미지 경로 (상대경로 ./img/...)
-
-            2.js(jsx)
+            <Routes>
+                <Route path='/'element={<Home foods={foods}/>}/>
+                <Route path='/help'element={<CustomerService/>}/>
+                <Route path='/detail'element={<div><h1>datail page</h1></div>}/>
+                <Route path='/info'element={<div><h1>info page</h1></div>}/>
+                <Route path='/*'element={<div><h1>잘못된 접근입니다.</h1></div>}/>
+            </Routes>
             
-            상대경로연결 사용 XXX
-            <img src="../../image/menu.png"/> XXX
-
-            react 컴포넌트 에서 이미지사용시, import ->사용
-            <img src="http://..외부 url"/>
-            <img src ={ import한 이미지}/>
-
-            3.public 폴더에 이미지를 미리 저장해놓고 사용
-            현재 실행중인 서버가 public 경로를 통해 image 에 접근할수 있는 서버역할
-            이미지 외부에 url에 접근해서 사용하듯이. 사용
-
-            <img src={'http://localhost:5173/images/food1.jpg'} />
-            <img src ={'/images/food1.jpg} />
-
-            cra : <img src ={ process.evn.PUBLIC_URL+'/images/food1.jpg} />
-                            package.json
-                            "homepage":"detailServicePath" 상세경로 설정
-
-            vite :<img src ={ import.meta.env.BASE_URL +'/images/food1.jpg} />
-                            vite.config. js
-                            base: "/detailServicePath/"상세경로 설정
-            */}
-
-            {/* <img src={banner_bg}/> */}
-            {/* <div className='main-bg' style={{backgroundImage:'url(' + banner_bg + ')'}}></div> */}
-            <div className='main-bg'></div>
-
-            {/* 
-            Bootstrap 한줄기준 :12
-             */}
-            <Container>
-                <Row>
-                    {
-                        foods.map((food, index)=>{
-                            return(
-                            <Col md={4} sm={2}>
-                                {/* <FoodCard id={food.id} titel={food.title} . . ./> */}
-                                <FoodCard food={food} foods={foods} index={index}/>
-                            </Col>
-                            )
-                        })
-                    }
-                </Row>
-            </Container>
-
-                {/* <Container>
-                <Row>
-                    <Col md={4} sm={2}>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={food1} />
-                            <Card.Body>
-                                <Card.Title>{foods[0].title}</Card.Title>
-                                <Card.Text>{foods[0].content}</Card.Text>
-                                <Card.Text>{foods[0].price}</Card.Text>
-                                <Button variant="primary">상세보기</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={4} sm={2}>
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={food2} />
-                        <Card.Body>
-                                <Card.Title>{foods[1].title}</Card.Title>
-                                <Card.Text>{foods[1].content}</Card.Text>
-                                <Card.Text>{foods[1].price}</Card.Text>
-                                <Button variant="primary">상세보기</Button>
-                            </Card.Body>
-                        
-                    </Card>
-                    </Col>
-                    <Col md={4} sm={2}><Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={food3} />
-                            <Card.Body>
-                                <Card.Title>{foods[2].title}</Card.Title>
-                                <Card.Text>{foods[2].content}</Card.Text>
-                                <Card.Text>{foods[2].price}</Card.Text>
-                                <Button variant="primary">상세보기</Button>
-                            </Card.Body>
-                    </Card>
-                    </Col>
-
-                </Row>
-            </Container> */}
-
-
-
-
-
-                {/* <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-
-            <Button variant="success">Success</Button> */}
-                {/* <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="success">Success</Button>
-            <Button variant="warning">Warning</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant="info">Info</Button>
-            <Button variant="light">Light</Button>
-            <Button variant="dark">Dark</Button>
-            <Button variant="link">Link</Button> */}
+            
         </div>
     );
 }

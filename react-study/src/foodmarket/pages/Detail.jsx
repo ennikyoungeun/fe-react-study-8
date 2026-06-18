@@ -77,13 +77,16 @@ function Detail({ foods }) {
         //setInterval - 몇초마다 계속실행
         //비동기 방식
 
+        //clearTimeout
+        //clearInterval
+
         const interv = setInterval(() => {
             console.log('interval');
         }, 1000)
         //클린업-- clearInteval
         //clearTimeOut
         return () => {
-            clearInterval();
+            clearInterval(interv);
         }
     }, [oderCount]) //oderCount가 다시 생성되도 클리어 하고, 다시생성,
 
@@ -113,6 +116,7 @@ function Detail({ foods }) {
 
     let navigate = useNavigate();
     //해당하는 id의 상품이 없으면? 필터링
+
     if (food == undefined || food == null) {
         return (
             <div>
@@ -125,6 +129,152 @@ function Detail({ foods }) {
         )
     }
 
+
+    //----------------------------------
+
+    //스타일 적용
+
+    /*
+        조건에 따라서 스타일 적용
+        가격표시
+            1만원이상 -> 빨간색
+            1만원미만 -> 파란색
+
+
+             1) js 객체
+
+        <p style={ {color:'red', fontSize:'20px'}  }>{food.price}</p>
+
+        const priceTextStyle = {
+            color: food.price >= 10000 ? 'red' : 'blue'
+        }
+        
+        { color:'red' }    { color:'blue' }
+
+        <p style={priceTextStyle}>{food.price}</p>
+        <p style={{color: food.price >= 10000 ? 'red' : 'blue'}}>{food.price}</p>
+
+
+        2) js 함수 방식
+
+        const priceTextStyleFunc = (price)=>{
+            if(price >= 10000){
+                return {color:'red'};
+            } else {
+                return {color:'blue'};
+            }
+
+            // return {color: price >= 10000 ? 'red' : 'blue'};
+        }
+
+        <p style={priceTextStyleFunc(food.price)}>{food.price}</p>
+
+
+        3) css 클래스 연계 사용
+
+        //클래스이름 단일
+        <p className={ food.price >= 10000 ? 'price-red' : 'price-blue'  }>{food.price}</p>
+
+        //클래스 여러개 
+        <p className={ 'text-strong ' + (food.price >= 10000 ? 'price-red' : 'price-blue')  }>{food.price}</p>
+
+        // className=속성값 에 들어가는 변수 형태로도 활용
+        const priceTextClassName = (food.price >= 10000 ? 'price-red' : 'price-blue');
+        <p className={ 'text-strong ' + priceTextClassName  }>{food.price}</p>
+
+        // 배열단위로 관리 join 함수 활용
+        ['text-strong', 'price-red'].join(" ")  ->  'text-strong price-red'
+        ['text-strong', 'price-red'].join("/")  ->  'text-strong/price-red'
+        <p className={ ['text-strong', (food.price >= 10000 ? 'price-red' : 'price-blue') ].join(" ") }>{food.price}</p>
+
+        // 백틱문자 활용 ``````    
+        <p className={ `text-strong ${priceTextClassName}`  }>{food.price}</p>
+        <p className={ `text-strong ${(food.price >= 10000 ? 'price-red' : 'price-blue')}`  }>{food.price}</p>
+
+        4) css class + useState + useEffect 조합 활용 -> 효과 발생
+
+        
+        let [viewStatus, setViewStatus] = useState('');
+
+        useEffect(() => {
+            //setViewStatus('end');
+            setTimeout(() => {
+                setViewStatus('end');
+            }, 500)
+
+        }, [])
+
+        <Container className={"start " + viewStatus}>
+
+        5) js 객체로 내부에서 스타일 정의 후 사용
+
+        const styles = {
+
+            redStyle : { color: 'red' },        //styles.redStyle 
+
+            blueStyle : { color: 'blue' },      //styles.blueStyle
+
+            fontBigBold : { 
+                fontSize:'36px',
+                fontWeight:'bold'
+            },
+
+            titleStyle : {
+                paddingTop:'30px',
+                fontSize:'40px',
+                fontWeight:'bold'
+            }
+
+        }
+
+        <h4 style={styles.titleStyle}>{food.title}</h4>
+        <p style={styles.fontBigBold}>{food.content}</p>
+
+
+    */
+    
+    const styles = {
+
+        redStyle : { color: 'red' },        //styles.redStyle 
+
+        blueStyle : { color: 'blue' },      //styles.blueStyle
+
+        fontBigBold : { 
+            fontSize:'36px',
+            fontWeight:'bold'
+        },
+
+        titleStyle : {
+            paddingTop:'30px',
+            fontSize:'40px',
+            fontWeight:'bold'
+        }
+
+    }
+
+
+    const priceTextStyleFunc = (price) => {
+        if (price >= 10000) {
+            return { color: 'red' };
+        } else {
+            return { color: 'blue' };
+        }
+
+         //return {color:price>=10000 ? 'red' : 'blue'};
+    } 
+    
+    
+
+    const priceTextStyle = {
+        color: food.price >= 10000 ? 'red' : 'blue'
+    }
+
+    const priceTextClassName = (food.price >= 10000 ? 'price-red' : 'price-blue');
+
+
+
+    //-----------------------------------
+
     //<div class=" box big container red"/>
     return (
         <Container className={"start " + viewStatus}>
@@ -135,15 +285,34 @@ function Detail({ foods }) {
                 <Col md={6}>
                     <h4>{food.title}</h4>
                     <p>{food.content}</p>
+                    <h4 style={{ paddingTop: '30px' }}>{food.title}</h4>
+                    <h4 style={styles.titleStyle}>{food.title}</h4>
+                    <p style={styles.fontBigBold}>{food.content}</p>
                     <p>{food.price}</p>
+                    <p style={priceTextStyle}>{food.price}</p>
+                    <p style={{ color: food.price >= 10000 ? 'red' : 'blue' }}>{food.price}</p>
+                    <p style={priceTextStyleFunc(food.price)}>{food.price}</p>
 
+                    <p className={ food.price >= 10000 ? 'price-red' : 'price-blue'  }>{food.price}</p>
+                    <p className={ 'text-strong ' + (food.price >= 10000 ? 'price-red' : 'price-blue')  }>{food.price}</p>
+                    <p className={ 'text-strong ' + priceTextClassName  }>{food.price}</p>
+                    <p className={ ['text-strong', (food.price >= 10000 ? 'price-red' : 'price-blue') ].join(" ") }>{food.price}</p>
+                    <p className={ `text-strong ${priceTextClassName}`  }>{food.price}</p>
+                    <p className={ `text-strong ${(food.price >= 10000 ? 'price-red' : 'price-blue')}`  }>{food.price}</p>
 
                     <p>
                         <Button variant="dard" onClick={() => {
+                            // -1씩 처리   0보다 작으면? -> 0 
+                            // -1 처리 후 0 이상 되는가?
+                            // 수량이 > 0 ?  0보다 커서 -1 해도 되는가?
                             if (oderCount > 0) { setOderCount(oderCount - 1); }
                         }}>-</Button>
+
                         <span> {oderCount} </span>
+
                         <Button variant="dard" onClick={() => {
+                              //보유한 재고까지만...
+                            // 재고보다 작은 수량인 경우 -> +1
                             if (oderCount < food.stockCount) {
                                 setOderCount(oderCount + 1);
                             } else { alert("재고수량 초과-품절"); }
@@ -152,9 +321,9 @@ function Detail({ foods }) {
                     </p>
 
                     {
-                        food.stockCount > 0 
-                            ?<Button variant="primary">주문하기</Button>
-                            :<Button variant="danger">품절</Button>
+                        food.stockCount > 0
+                            ? <Button variant="primary">주문하기</Button>
+                            : <Button variant="danger">품절</Button>
                     }
                 </Col>
             </Row>

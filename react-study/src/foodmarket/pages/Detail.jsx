@@ -60,32 +60,32 @@ function Detail({ foods }) {
 
     }, [])
 
-    let[modalShow, setModalShow] = useState(true); //모달창 표시 여부 true,false
+    let [modalShow, setModalShow] = useState(true); //모달창 표시 여부 true,false
 
     //Modal창 자동으로 닫히게 적용
-    useEffect(()=>{
-         //modalShow stats변수 true -> false
+    useEffect(() => {
+        //modalShow stats변수 true -> false
 
         setTimeout(() => {
-             setModalShow(false);
+            setModalShow(false);
         }, 2000)  //->2초뒤에..
 
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         //setTimeout
         //setInterval - 몇초마다 계속실행
         //비동기 방식
 
-        const interv = setInterval(()=>{
+        const interv = setInterval(() => {
             console.log('interval');
-        },1000)
+        }, 1000)
         //클린업-- clearInteval
         //clearTimeOut
-        return()=>{
+        return () => {
             clearInterval();
         }
-    },[oderCount]) //oderCount가 다시 생성되도 클리어 하고, 다시생성,
+    }, [oderCount]) //oderCount가 다시 생성되도 클리어 하고, 다시생성,
 
 
 
@@ -137,23 +137,32 @@ function Detail({ foods }) {
                     <p>{food.content}</p>
                     <p>{food.price}</p>
 
+
                     <p>
-                        <Button variant="dard" onClick={() => { setOderCount(oderCount - 1) }}>-</Button>
+                        <Button variant="dard" onClick={() => {
+                            if (oderCount > 0) { setOderCount(oderCount - 1); }
+                        }}>-</Button>
                         <span> {oderCount} </span>
                         <Button variant="dard" onClick={() => {
-                            setOderCount(oderCount + 1)
+                            if (oderCount < food.stockCount) {
+                                setOderCount(oderCount + 1);
+                            } else { alert("재고수량 초과-품절"); }
                             console.log('onClick():' + oderCount);
                         }}>+</Button>
                     </p>
 
-                    <Button variant="primary">주문하기</Button>
+                    {
+                        food.stockCount > 0 
+                            ?<Button variant="primary">주문하기</Button>
+                            :<Button variant="danger">품절</Button>
+                    }
                 </Col>
             </Row>
 
 
             <Modal
                 show={modalShow}
-                onHide={()=>{setModalShow(false);}}
+                onHide={() => { setModalShow(false); }}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -170,7 +179,7 @@ function Detail({ foods }) {
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={()=>{ setModalShow(false); }}>Close</Button>
+                    <Button onClick={() => { setModalShow(false); }}>Close</Button>
                 </Modal.Footer>
             </Modal>
 

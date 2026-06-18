@@ -1,6 +1,6 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router";
-
+import { useEffect,useState } from "react";
 
 function Detail( {foods} ){
 
@@ -10,6 +10,45 @@ function Detail( {foods} ){
     // /detail/fd000     detail/fd001
 
     //:id 위치에 넘어온 값이 무엇이냐?를알면 -->food 데이터 id가 동일한 상품 찾기
+
+    //-----------------------------
+    /*
+        useEffect(실행함수, 의존성배열)
+        useEffect(실행함수, [])
+        useEffect(실행함수 )
+
+        useEffect(실행함수{
+        return()=>{clean up function}},의존성 배열)
+    */
+    let [oderCount,setOderCount] = useState(0);
+    let [test, setTest]= useState(0);
+
+        useEffect(()=>{
+            console.log('useEffect 함수실행(의존성 배열 없음)')
+        }) //의존성배열이 없으면 -> 로딩될때마다 매번 실행
+
+        useEffect(()=>{
+            console.log('useEffect 함수실행[]빈배열의존')
+        },[]) //빈배열 -> 생성/로딩시 1회실행
+
+        useEffect(()=>{
+            console.log('useEffect 함수실행[oderCount]의존성 배열')
+            console.log('useEffect[oderCount]'+oderCount);
+        },[oderCount]) //의존성 배열에 존재하는 값-> 참고
+
+        useEffect(()=>{
+            console.log('useEffect 함수실행[oderCount]의존성 배열')
+        },[test]) //의존성 배열에 존재하는 값-> 참고
+
+        useEffect(()=>{
+            console.log('useEffect 함수실행[test,oderCount]의존성 배열')
+        },[test, oderCount]) //의존성 배열에 존재하는 값-> 참고
+
+
+
+
+    //-------------------------
+
 
     //경로에 있는 값을 읽어오기
     let { id } = useParams();
@@ -57,9 +96,11 @@ function Detail( {foods} ){
                     <p>{food.price}</p>
 
                     <p>
-                        <Button variant="dard">-</Button>
-                        <span> 0 </span>
-                        <Button variant="dard">+</Button>
+                        <Button variant="dard" onClick={()=>{setOderCount(oderCount-1) }}>-</Button>
+                        <span> {oderCount} </span>
+                        <Button variant="dard" onClick={()=>{setOderCount(oderCount+1)
+                            console.log('onClick():'+oderCount);
+                        }}>+</Button>
                     </p>
 
                     <Button variant="primary">주문하기</Button>
